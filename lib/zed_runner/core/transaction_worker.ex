@@ -1,7 +1,7 @@
 defmodule ZedRunner.TransactionWorker do
   use GenServer
 
-  alias ZedRunner.Transaction
+  alias ZedRunner.{Transaction, Slack}
 
   def whereis(hash) do
     Registry.lookup(Registry.TransactionWorkers, hash)
@@ -31,8 +31,8 @@ defmodule ZedRunner.TransactionWorker do
   @impl true
   def handle_cast({:update_status, %{"status" => status} = payload}, state)
       when status in ["confirmed", "registered"] do
-        # Fire * call to webhook.
-
+    # Fire *   call to webhook.
+    Slack.post_data(%{status: status, transaction_id: payload["hash"]})
     # Keep alive for 1 hour.
     Process.send_after(self, :check_status, 360_000)
 
@@ -46,7 +46,9 @@ defmodule ZedRunner.TransactionWorker do
   end
 
   def handle_cast({:update_status, %{"status" => pending} = payload}, state) do
-    Process.send_after(self, :check_status, 2000)
+    if pending == "pending" do
+      Process.send_after(self, :check_status, 2000)
+    end
 
     state =
       Map.merge(state, %{
@@ -60,16 +62,24 @@ defmodule ZedRunner.TransactionWorker do
   @impl true
   def handle_info(:check_status, %{payload: %{"status" => "pending"}} = state) do
     Process.send_after(self, :check_status, 2000)
-    # Fire * call to webhook.
+    Slack.post_data(%{status: "pending", transaction_id: state.payload["hash"]})
     {:noreply, state}
   end
 
-  def handle_info(:check_status, state) do
-    IO.puts "completed process"
-    {:stop, :completed, state}
+  # I dont think this will ever get called.
+  def handle_info(:check_status, %{payload: %{"status" => status}} = state)
+      when status in ["confirmed", "registered"] do
+    Slack.post_data(%{status: status, transaction_id: state.payload["hash"]})
+
+    {:noreply, state}
+  end
+
+  def handle_info(:check_status, %{payload: %{"status" => status}} = state) do
+    {:noreply, state}
   end
 
   def handle_info(:shutdown, state) do
+    IO.puts("completed process")
     {:stop, :completed, state}
   end
 end

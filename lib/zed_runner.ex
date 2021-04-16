@@ -35,4 +35,8 @@ defmodule ZedRunner do
   def block_native_api_key do
     Application.get_env(:zed_runner, :block_native_api)
   end
+
+  def slack_webhook do
+    Application.get_env(:zed_runner, :slack_webhook)
+  end
 end
