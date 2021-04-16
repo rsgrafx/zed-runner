@@ -24,7 +24,8 @@ defmodule BlockNativeTest do
    test "should update state of process" do
     txn_id = "0x8867ea9a8845c54935a8986dcbd0287a03bd8e655cf3bc38bc3249682d328c27"
     assert {:ok, pid} = BlockNative.subscribe_and_start(txn_id)
-    assert TransactionWorker.whereis(txn_id) == pid
+    assert [{^pid, _}] = TransactionWorker.whereis(txn_id)
+
    end
   end
 end

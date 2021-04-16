@@ -13,7 +13,9 @@ defmodule ZedRunner.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: ZedRunner.PubSub},
       # Start the Endpoint (http/https)
-      ZedRunnerWeb.Endpoint
+      ZedRunnerWeb.Endpoint,
+
+      {Registry, [keys: :unique, name: Registry.TransactionWorkers]}
       # Start a worker by calling: ZedRunner.Worker.start_link(arg)
       # {ZedRunner.Worker, arg}
     ]

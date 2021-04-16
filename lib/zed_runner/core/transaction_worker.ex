@@ -4,7 +4,7 @@ defmodule ZedRunner.TransactionWorker do
   alias ZedRunner.Transaction
 
   def whereis(hash) do
-    :global.whereis_name(hash)
+    Registry.lookup(Registry.TransactionWorkers, hash)
   end
 
   @spec start(Transaction.t) :: any
@@ -12,8 +12,9 @@ defmodule ZedRunner.TransactionWorker do
     GenServer.start_link(__MODULE__, %{
       transaction: transaction,
       payload: %{}
-      }, name: {:global, transaction.hash})
+      }, name: ZedRunner.via_registry_name(transaction.hash))
   end
+
 
   def update_status(pid, payload) do
     GenServer.cast(pid, {:update_status, payload})

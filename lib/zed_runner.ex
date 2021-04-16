@@ -9,6 +9,9 @@ defmodule ZedRunner do
 
   alias ZedRunner.TransactionWorker
 
+  def via_registry_name(txn_id) do
+    {:via, Registry, {Registry.TransactionWorkers, txn_id}}
+  end
   def find_and_update(%{"hash" => hash} = params) do
     with pid when is_pid(pid) <- TransactionWorker.whereis(hash),
       true <- Process.alive?(pid),
