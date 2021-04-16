@@ -20,24 +20,4 @@ confirmed
 
 • When transaction state is 
 
-
-
-
-
-```mermaid
-
-sequenceDiagram
-
-participant client as Zed.Run.Client
-participant zed as Zed-Elixir
-participant block as BlockNative
-participant slack as Slack Webhook
-
-note over client,zed: Subscribe to Transaction.
-client->>+zed: Specify one or more txns
-zed->>+block: Subscribes to Transactions
-block->>-zed: feeds data back
-
-zed->>slack: pushes transaction status - when registered/confirmed data to Webhook
-
-```
+<img src="support/flow.png" />
