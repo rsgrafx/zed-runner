@@ -10,6 +10,7 @@ defmodule ZedRunnerWeb.Router do
 
     post "/txn/check", TxnController, :pending
     post "/txns", TxnController, :index
+    post "/blocknative/webhook", TxnController, :update
   end
 
   # Enables LiveDashboard only for development
