@@ -30,5 +30,4 @@ defmodule ZedRunnerWeb.ConnCase do
       @endpoint ZedRunnerWeb.Endpoint
     end
   end
-
 end

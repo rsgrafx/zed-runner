@@ -33,6 +33,7 @@ defmodule ZedRunner.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:tesla, "~> 1.4"},
       {:phoenix, "~> 1.5.8"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_dashboard, "~> 0.4"},
