@@ -7,6 +7,16 @@ defmodule ZedRunner do
   if it comes from the database, an external API or others.
   """
 
+  alias ZedRunner.TransactionWorker
+
+  def find_and_update(%{"hash" => hash} = params) do
+    with pid when is_pid(pid) <- TransactionWorker.whereis(hash),
+      true <- Process.alive?(pid),
+      :ok <- TransactionWorker.update_status(pid, params) do
+        {:ok, :received}
+    end
+  end
+
   def block_native_api_key do
     Application.get_env(:zed_runner, :block_native_api)
   end
