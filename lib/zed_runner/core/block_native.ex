@@ -4,6 +4,8 @@ defmodule ZedRunner.BlockNative do
   """
   use Tesla
 
+  alias ZedRunner.TransactionWorker
+
   @endpoint "https://api.blocknative.com"
 
   plug Tesla.Middleware.BaseUrl, @endpoint
@@ -17,8 +19,8 @@ defmodule ZedRunner.BlockNative do
           status: String.t()
         }
 
-  @spec status(txn_hash) :: transaction
-  def status(txn_hash) do
+  @spec subscribe_and_start(txn_hash) :: transaction
+  def subscribe_and_start(txn_hash) do
     data = Transaction.build(txn_hash)
     with {:ok, response } <- post("/transaction", data) do
       status_response(response, data)
@@ -29,8 +31,8 @@ defmodule ZedRunner.BlockNative do
     end
   end
 
-  defp status_response(%{status: 200, body: %{"msg" => status}}, data) do
-    Map.merge(data, %{status: String.to_atom(status)})
+  defp status_response(%{status: 200, body: %{"msg" => "success"}}, data) do
+    TransactionWorker.start(data)
   end
 
   defp status_response(%{status: code} = _response, _data) when code > 300 do

@@ -7,7 +7,7 @@ defmodule ZedRunner.TransactionTest do
     test "payload structure" do
       assert %{
                apiKey: key,
-               hash: "txn13232",
+              #  hash: "txn13232",
                blockchain: "ethereum",
                network: "main"
              } = Transaction.build("txn13232")
