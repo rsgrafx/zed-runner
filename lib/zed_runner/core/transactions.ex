@@ -7,7 +7,8 @@ defmodule ZedRunner.Transactions do
   @registry Registry.TransactionWorkers
 
   def lookup(txn_id) do
-    Registry.lookup(@registry, txn_id)
+    [{pid, _}] = Registry.lookup(@registry, txn_id)
+    :sys.get_state pid
   end
 
   def all do

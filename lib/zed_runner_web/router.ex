@@ -9,7 +9,7 @@ defmodule ZedRunnerWeb.Router do
     pipe_through :api
 
     post "/txn/check", TxnController, :pending
-    post "/txns", TxnController, :index
+    post "/txns", TxnController, :check
     post "/blocknative/webhook", TxnController, :update
   end
 
