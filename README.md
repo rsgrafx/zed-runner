@@ -1,19 +1,43 @@
 # ZedRunner
 
-To start your Phoenix server:
+## TXN States
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server`
+```
+pending
+registered
+confirmed
+```
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+@WIP Goal is to build service that accomplishes these tasks
 
-## Learn more
+• Surfaces endpoint to receive payload of transaction ids
+• Surfaces endpoint that returns json payload of Pending transactions
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+• Subscribes to updates from BlockNative api for status of specific txn ids
+
+• When state is transaction state is `registered` or `confirmed` payload is sent to webhook (Slack)
+
+• When transaction state is 
+
+
+
+
+
+```mermaid
+
+sequenceDiagram
+
+participant client as Zed.Run.Client
+participant zed as Zed-Elixir
+participant block as BlockNative
+participant slack as Slack Webhook
+
+note over client,zed: Subscribe to Transaction.
+client->>+zed: Specify one or more txns
+zed->>+block: Subscribes to Transactions
+block->>-zed: feeds data back
+
+zed->>slack: pushes transaction status - when registered/confirmed data to Webhook
+
+```

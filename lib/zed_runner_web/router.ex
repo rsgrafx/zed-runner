@@ -7,6 +7,9 @@ defmodule ZedRunnerWeb.Router do
 
   scope "/api", ZedRunnerWeb do
     pipe_through :api
+
+    post "/txn/check", TxnController, :pending
+    post "/txns", TxnController, :index
   end
 
   # Enables LiveDashboard only for development
