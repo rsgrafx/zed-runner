@@ -8,7 +8,6 @@ defmodule ZedRunner.Application do
   def start(_type, _args) do
     children = [
       # Start the Ecto repository
-      ZedRunner.Repo,
       # Start the Telemetry supervisor
       ZedRunnerWeb.Telemetry,
       # Start the PubSub system

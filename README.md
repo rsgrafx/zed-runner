@@ -8,7 +8,6 @@ registered
 confirmed
 ```
 
-
 @WIP Goal is to build service that accomplishes these tasks
 
 • Surfaces endpoint to receive payload of transaction ids

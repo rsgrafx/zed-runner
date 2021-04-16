@@ -28,13 +28,4 @@ defmodule ZedRunnerWeb.ChannelCase do
     end
   end
 
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ZedRunner.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(ZedRunner.Repo, {:shared, self()})
-    end
-
-    :ok
-  end
 end
