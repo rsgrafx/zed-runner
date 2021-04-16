@@ -27,5 +27,4 @@ defmodule ZedRunnerWeb.ChannelCase do
       @endpoint ZedRunnerWeb.Endpoint
     end
   end
-
 end
