@@ -1,8 +1,6 @@
 # ZedRunner
 
-
 # Requirements
-
 
 You will need a account BlockNative and an API key
 https://blocknative.com
@@ -22,6 +20,7 @@ Clone this repository
 Required environment variables
 
 `export BLOCK_NATIVE_API="your block native api key"`
+`export SLACK_WEBHOOK='your web hook'`
 
 
 ## Description

@@ -28,8 +28,7 @@ config :phoenix, :json_library, Jason
 
 config :zed_runner,
   block_native_api: System.get_env("BLOCK_NATIVE_API"),
-  slack_webhook:
-    "https://hooks.slack.com/services/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"
+  slack_webhook: System.get_env("SLACK_WEBHOOK")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
