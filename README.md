@@ -23,6 +23,23 @@ Required environment variables
 `export SLACK_WEBHOOK='your web hook'`
 
 
+# Steps to run
+## Start Tunnel
+
+`$ cd ~/path to cloned repo`
+
+`$ mix phx.server`
+
+Start ngrok - or your tunnel of your choice
+
+`$ ./ngrok http 4000
+
+<img src="support/start-ngrok.gif">
+
+## Paste setup BlockNative Webhook.
+
+<img src="support/blocknative-webhook.gif">
+
 ## Description
 
 @WIP Goal is to build service that accomplishes these tasks
