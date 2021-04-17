@@ -5,6 +5,13 @@ defmodule ZedRunnerWeb.TxnController do
 
   alias ZedRunner
 
+  def pending(conn, params) do
+    status = params["status"] || "pending"
+    data = ZedRunner.fetch_with_status(status)
+
+    render(conn, "payload.json", %{data: data, status: status})
+  end
+
   @doc """
   Request Payload
   %{"txn_ids" => ["txn_id"]}

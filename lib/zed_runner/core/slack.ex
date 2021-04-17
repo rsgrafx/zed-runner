@@ -10,12 +10,14 @@ defmodule ZedRunner.Slack do
   plug Tesla.Middleware.JSON
 
   def post_data(data) do
-    data = Jason.encode!(data)
+    stringified = Jason.encode!(data)
 
     payload = """
-    Code Snippet ```#{data}```
+    Hash: #{data.transaction_id} \n
+    Status: #{data.status}
+    ```#{stringified}```
     """
 
-    post(ZedRunner.slack_webhook, %{text: payload})
+    post(ZedRunner.slack_webhook(), %{text: payload})
   end
 end
