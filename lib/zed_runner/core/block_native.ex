@@ -22,7 +22,8 @@ defmodule ZedRunner.BlockNative do
   @spec subscribe_and_start(txn_hash) :: transaction
   def subscribe_and_start(txn_hash) do
     data = Transaction.build(txn_hash)
-    with {:ok, response } <- post("/transaction", data) do
+
+    with {:ok, response} <- post("/transaction", data) do
       status_response(response, data)
     else
       error ->

@@ -21,7 +21,7 @@ defmodule ZedRunner.Transaction do
       apiKey: ZedRunner.block_native_api_key(),
       blockchain: "ethereum",
       network: "main",
-      hash: txnid,
+      hash: txnid
     }
   end
 end

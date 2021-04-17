@@ -8,14 +8,14 @@ defmodule ZedRunner.Transactions do
 
   def lookup(txn_id) do
     [{pid, _}] = Registry.lookup(@registry, txn_id)
-    :sys.get_state pid
+    :sys.get_state(pid)
   end
 
   def all do
     results = Registry.select(@registry, [{{:"$1", :"$2", :"$3"}, [], [{{:"$1", :"$2", :"$3"}}]}])
+
     Enum.map(results, fn {_, pid, _} ->
       :sys.get_state(pid)
     end)
   end
-
 end
